@@ -1,8 +1,8 @@
 <img src="rootstock-logo.png" alt="RSK Logo" style="width:100%; height: auto;" />
 
-# Runes Mock Bridge
+# Rootstock - Rainbowkit Demo
 
-This project is an open-source proof of concept implementing a Runes Mock Bridge. The primary goal is to allow users to etch (and eventually mint) Runes on the Bitcoin network and create a 1:1 representation of these Runes as ERC1155 tokens (Non fungible initially) on the Rootstock (RSK) network, manage the runes in the RSK network, and then take it back to BTC.
+This project is an open-source demo implementing a frontend interaction with an ERC20 smart contract deplyed on Rootstock Testnet network. It uses [RainbowKit](https://rainbowkit.com) to connect to the wallet and [wagmi](https://wagmi.sh) to interact with the smart contract.
 
 
 
