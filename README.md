@@ -1,4 +1,12 @@
-This is a [RainbowKit](https://rainbowkit.com) + [wagmi](https://wagmi.sh) + [Next.js](https://nextjs.org/) project bootstrapped with [`create-rainbowkit`](/packages/create-rainbowkit).
+<img src="rootstock-logo.png" alt="RSK Logo" style="width:100%; height: auto;" />
+
+# Runes Mock Bridge
+
+This project is an open-source proof of concept implementing a Runes Mock Bridge. The primary goal is to allow users to etch (and eventually mint) Runes on the Bitcoin network and create a 1:1 representation of these Runes as ERC1155 tokens (Non fungible initially) on the Rootstock (RSK) network, manage the runes in the RSK network, and then take it back to BTC.
+
+
+
+
 
 ## Getting Started
 
