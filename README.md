@@ -1,4 +1,12 @@
-This is a [RainbowKit](https://rainbowkit.com) + [wagmi](https://wagmi.sh) + [Next.js](https://nextjs.org/) project bootstrapped with [`create-rainbowkit`](/packages/create-rainbowkit).
+<img src="rootstock-logo.png" alt="RSK Logo" style="width:100%; height: auto;" />
+
+# Rootstock - Rainbowkit Demo
+
+This project is an open-source demo implementing a frontend interaction with an ERC20 smart contract deplyed on Rootstock Testnet network. It uses [RainbowKit](https://rainbowkit.com) to connect to the wallet and [wagmi](https://wagmi.sh) to interact with the smart contract.
+
+
+
+
 
 ## Getting Started
 
