@@ -2,8 +2,86 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import { Fragment, useEffect, useState } from 'react';
+import { useAccount, useConfig, useReadContract, useWriteContract } from 'wagmi';
+import {
+  readContract,
+} from '@wagmi/core';
+// Contract ABI
+const contractABI = [
+  {
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+  {
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "mint",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+]
+const contractAddress = '0x3E5A75bD2b60a502AcE0da9746de2E15Aed0b2B5'
 
 const Home: NextPage = () => {
+  const {address}= useAccount();
+  const config = useConfig();
+  
+  const [inputValue, setInputValue] = useState<number>(0);
+  const { data: hash, writeContract, isSuccess, isPending, isError, error } = useWriteContract()
+  const [balance, setBalance] = useState<number | null>(null);
+  useEffect(() => {
+    console.log('isError is', isError);
+    console.log('error is', error);
+    
+  }, [isError])
+  
+  const hadleWriteContract = async () => {
+    console.log('recording new value: ', inputValue);
+    writeContract({
+      address: contractAddress,
+      abi: contractABI,
+      functionName: 'mint',
+      args: [address, inputValue],
+    })
+  }
+  const handleRetrieve = async () => {
+    const balance = (await readContract(config, {
+      address: contractAddress,
+      abi: contractABI,
+      functionName: 'balanceOf',
+      args: [address],
+    })) as bigint;
+    console.log('balance is',balance.toString());
+    setBalance(Number(balance));
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -19,57 +97,36 @@ const Home: NextPage = () => {
         <ConnectButton />
 
         <h1 className={styles.title}>
-          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{' '}
-          <a href="https://nextjs.org">Next.js!</a>
+          Connect DApp to a Basic Smart Contract
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+        <section className={styles.card}>
+          <h2>Mint Token</h2>
+          <input
+            type="number"
+            value={inputValue}
+            onChange={(e) => setInputValue(Number(e.target.value))}
+            placeholder="Enter a value"
+          />
+          <button onClick={hadleWriteContract} disabled={isPending || isError}>
+            {isPending ? 'Minting...' : 'Mint'}
+          </button>
+          <p>{isError && 'Error minting token'}</p>
+          {isSuccess && hash && 
+            <Fragment>
+              <p>{`Function executed \n with hash`}</p>
+              <p style={{fontSize: 10}}>{`Hash ${hash}`}</p>
+            </Fragment>
+            }
+        </section>
 
-        <div className={styles.grid}>
-          <a className={styles.card} href="https://rainbowkit.com">
-            <h2>RainbowKit Documentation &rarr;</h2>
-            <p>Learn how to customize your wallet connection flow.</p>
-          </a>
-
-          <a className={styles.card} href="https://wagmi.sh">
-            <h2>wagmi Documentation &rarr;</h2>
-            <p>Learn how to interact with Ethereum.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://github.com/rainbow-me/rainbowkit/tree/main/examples"
-          >
-            <h2>RainbowKit Examples &rarr;</h2>
-            <p>Discover boilerplate example RainbowKit projects.</p>
-          </a>
-
-          <a className={styles.card} href="https://nextjs.org/docs">
-            <h2>Next.js Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-          >
-            <h2>Next.js Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <section className={styles.card}>
+          <h2>Fetch Balance</h2>
+          <button onClick={handleRetrieve}>
+            Retrieve Balance
+          </button>
+          {balance !== null && <p>Balance is: {balance}</p>}
+        </section>
       </main>
 
       <footer className={styles.footer}>
