@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { Fragment, useEffect, useState } from 'react';
-import { useAccount, useConfig, useReadContract, useWriteContract } from 'wagmi';
+import { useAccount, useConfig, useWriteContract } from 'wagmi';
 import {
   readContract,
 } from '@wagmi/core';
@@ -63,7 +63,6 @@ const Home: NextPage = () => {
   }, [isError])
   
   const hadleWriteContract = async () => {
-    console.log('recording new value: ', inputValue);
     writeContract({
       address: contractAddress,
       abi: contractABI,
