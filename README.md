@@ -4,6 +4,10 @@
 
 This project is an open-source demo implementing a frontend interaction with an ERC20 smart contract deplyed on Rootstock Testnet network. It uses [RainbowKit](https://rainbowkit.com) to connect to the wallet and [wagmi](https://wagmi.sh) to interact with the smart contract.
 
+# Branches
+- **main:** This branch contains the initial/base code for the demo. Does NOT contain the complete code.
+- **completed:** This branch contains the final code for the demo completed in the live presentation.
+
 # Important sections
 Next, we will explain the most important sections of the project, which enable interaction with the smart contract. To demonstrate two different ways of interacting with the smart contract, we use a `Wagmi hook` to write to the contract and a `@wagmi/core` function to read from it. However, you can also use the Wagmi hook to read from the smart contract, or vice versa.
 
