@@ -4,7 +4,8 @@
 
 This project is an open-source demo implementing a frontend interaction with an ERC20 smart contract deplyed on Rootstock Testnet network. It uses [RainbowKit](https://rainbowkit.com) to connect to the wallet and [wagmi](https://wagmi.sh) to interact with the smart contract.
 
-# Branches
+## Branches
+Take into account that this repository has 2 branches:
 - **main:** This branch contains the initial/base code for the demo. Does NOT contain the complete code.
 - **completed:** This branch contains the final code for the demo completed in the live presentation.
 
